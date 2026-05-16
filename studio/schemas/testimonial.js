@@ -26,9 +26,9 @@ export default {
       name: 'date',
       title: 'Datum',
       type: 'date',
-      options: {
-        dateFormat: 'YYYY-MM-DD',
-      },
+      options: { dateFormat: 'YYYY-MM-DD' },
+      initialValue: () => new Date().toISOString().slice(0, 10),
+      validation: (Rule) => Rule.required(),
     },
   ],
   preview: {

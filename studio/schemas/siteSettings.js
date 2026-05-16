@@ -2,7 +2,6 @@ export default {
   name: 'siteSettings',
   title: 'Site-instellingen',
   type: 'document',
-  __experimental_actions: ['update', 'publish'],
   fields: [
     {
       name: 'salonName',

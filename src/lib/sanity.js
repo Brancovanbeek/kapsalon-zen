@@ -1,7 +1,10 @@
 import { createClient } from '@sanity/client';
 
+const projectId = import.meta.env.SANITY_PROJECT_ID ?? import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+if (!projectId) throw new Error('Sanity project ID ontbreekt. Stel SANITY_PROJECT_ID in als environment variable.');
+
 export const sanityClient = createClient({
-  projectId: import.meta.env.SANITY_PROJECT_ID ?? import.meta.env.PUBLIC_SANITY_PROJECT_ID,
+  projectId,
   dataset: import.meta.env.SANITY_DATASET ?? import.meta.env.PUBLIC_SANITY_DATASET ?? 'production',
   apiVersion: '2025-01-01',
   useCdn: false,
@@ -85,8 +88,7 @@ export async function getProductBySlug(slug) {
     inStock,
     "imageUrl": image.asset->url,
     "imageAlt": image.alt,
-    "galleryImages": images[]{"url": asset->url, "alt": alt},
-    "address": *[_type == "siteSettings"][0].address
+    "galleryImages": images[]{"url": asset->url, "alt": alt}
   }`, { slug });
 }
 
@@ -151,11 +153,15 @@ export function srcset(url, widths = [400, 800, 1200, 1800]) {
 // Sanity slaat rijke tekst op als een array van blokken, niet als HTML.
 // Deze functie zet die blokken om naar gewone HTML-tags (<p>, <h2>, etc.)
 // zodat ze direct in de pagina gezet kunnen worden met set:html={...}.
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 export function portableTextToHtml(blocks = []) {
   return blocks
     .filter(b => b._type === 'block')
     .map(b => {
-      const text = (b.children ?? []).map(c => c.text ?? '').join('');
+      const text = escapeHtml((b.children ?? []).map(c => c.text ?? '').join(''));
       const tag = { h2: 'h2', h3: 'h3', h4: 'h4', blockquote: 'blockquote' }[b.style] ?? 'p';
       return `<${tag}>${text}</${tag}>`;
     })
@@ -167,5 +173,5 @@ export function portableTextToHtml(blocks = []) {
 export function formatPrice(price) {
   return new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' })
     .format(price)
-    .replace(',00', ',–');
+    .replace(/,00$/, ',–');
 }

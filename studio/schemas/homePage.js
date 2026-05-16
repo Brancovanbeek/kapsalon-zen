@@ -2,7 +2,6 @@ export default {
   name: 'homePage',
   title: 'Homepage',
   type: 'document',
-  __experimental_actions: ['update', 'publish'],
   fields: [
     {
       name: 'heroHeadline',
@@ -33,7 +32,7 @@ export default {
           ],
         },
       ],
-      validation: (Rule) => Rule.max(4),
+      validation: (Rule) => Rule.min(4).max(4).error('Voeg precies 4 afbeeldingen toe voor het 2×2 raster.'),
     },
     {
       name: 'aboutHeading',

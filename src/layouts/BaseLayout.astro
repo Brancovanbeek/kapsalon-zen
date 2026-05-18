@@ -1,4 +1,7 @@
 ---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
 const {
   title,
   description = 'Kapsalon Zen — uw lokale kapsalon voor knippen, kleuren en haarverzorging.',
@@ -23,7 +26,9 @@ const fullTitle = title ? `${title} | Kapsalon Zen` : 'Kapsalon Zen';
     <title>{fullTitle}</title>
   </head>
   <body>
+    <Nav />
     <slot />
+    <Footer />
   </body>
 </html>
 

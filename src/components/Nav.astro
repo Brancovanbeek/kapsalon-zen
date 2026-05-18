@@ -108,7 +108,7 @@ const isActive = (href: string) =>
   }
 
   .nav__links {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 2.5rem;
   }
@@ -151,13 +151,13 @@ const isActive = (href: string) =>
   }
 
   .nav__cta {
+    display: none;
     padding: 0.625rem 1.5rem;
     font-size: 0.8rem;
   }
 
-  /* Hamburger */
   .nav__hamburger {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 5px;
     padding: 4px;
@@ -253,15 +253,14 @@ const isActive = (href: string) =>
     pointer-events: all;
   }
 
-  /* Responsive */
-  @media (max-width: 900px) {
+  @media (min-width: 901px) {
     .nav__links,
     .nav__cta {
-      display: none;
+      display: flex;
     }
 
     .nav__hamburger {
-      display: flex;
+      display: none;
     }
   }
 </style>

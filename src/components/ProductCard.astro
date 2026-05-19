@@ -14,28 +14,28 @@ const {
 ---
 
 <article class="product-card" data-category={category}>
-  <a href={`/producten/${slug}`} class="product-card__link" tabindex="-1" aria-hidden="true">
-    <div class="product-card__image-wrap">
+  <div class="product-card__image-wrap">
+    <a href={`/producten/${slug}`} class="product-card__image-link" aria-label={title}>
       {imageUrl ? (
         <img
-          src={`${imageUrl}?w=600&auto=format`}
+          src={`${imageUrl}?w=800&auto=format`}
           srcset={srcset(imageUrl)}
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           alt={imageAlt ?? title}
           class="product-card__image"
           loading="lazy"
-          width="600"
-          height="600"
+          width="800"
+          height="800"
         />
       ) : (
         <div class="product-card__image product-card__image--placeholder"></div>
       )}
+    </a>
 
-      {!inStock && (
-        <div class="product-card__sold-out" aria-label="Uitverkocht">Uitverkocht</div>
-      )}
-    </div>
-  </a>
+    {inStock === false && (
+      <div class="product-card__sold-out" aria-label="Uitverkocht">Uitverkocht</div>
+    )}
+  </div>
 
   <div class="product-card__body">
     {brand && <p class="product-card__brand label">{brand}</p>}
@@ -52,7 +52,7 @@ const {
     flex-direction: column;
   }
 
-  .product-card__link {
+  .product-card__image-link {
     display: block;
     overflow: hidden;
   }
@@ -71,7 +71,7 @@ const {
     transition: transform 0.6s ease;
   }
 
-  .product-card:hover .product-card__image {
+  .product-card:hover .product-card__image-link .product-card__image {
     transform: scale(1.05);
   }
 

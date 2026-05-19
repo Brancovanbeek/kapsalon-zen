@@ -1,0 +1,57 @@
+---
+import { formatPrice, srcset } from '../lib/sanity.js';
+
+const { 
+  title, 
+  slug, 
+  brand, 
+  price, 
+  imageUrl, 
+  imageAlt, 
+  inStock, 
+  category 
+  } = Astro.props;
+---
+
+<article class="product-card" data-category={category}>
+  <a href={`/producten/${slug}`} class="product-card__link" tabindex="-1" aria-hidden="true">
+    <div class="product-card__image-wrap">
+      {imageUrl ? (
+        <img
+          src={`${imageUrl}?w=600&auto=format`}
+          srcset={srcset(imageUrl)}
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          alt={imageAlt ?? title}
+          class="product-card__image"
+          loading="lazy"
+          width="600"
+          height="600"
+        />
+      ) : (
+        <div class="product-card__image product-card__image--placeholder"></div>
+      )}
+
+      {!inStock && (
+        <div class="product-card__sold-out" aria-label="Uitverkocht">Uitverkocht</div>
+      )}
+    </div>
+  </a>
+
+  <div class="product-card__body">
+    {brand && <p class="product-card__brand label">{brand}</p>}
+    <h3 class="product-card__title">
+      <a href={`/producten/${slug}`} class="product-card__title-link">{title}</a>
+    </h3>
+    <p class="product-card__price">{formatPrice(price)}</p>
+  </div>
+</article>
+
+    border-bottom-color: var(--accent);
+  }
+
+  .product-card__price {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--muted);
+  }
+</style>

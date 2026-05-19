@@ -1,0 +1,119 @@
+---
+import { srcset } from '../lib/sanity.js';
+
+const { title, slug, shortDescription, price, number, imageUrl, imageAlt } = Astro.props;
+---
+
+<article class="service-card">
+  <div class="service-card__inner">
+    <span class="service-card__number label">{number}</span>
+
+    {imageUrl
+      ? <div class="service-card__image">
+          <img
+            src={`${imageUrl}?w=800&auto=format`}
+            srcset={srcset(imageUrl)}
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            alt={imageAlt ?? title}
+            loading="lazy"
+            width="400"
+            height="300"
+          />
+        </div>
+      : <div class="service-card__image service-card__image--placeholder"></div>
+    }
+
+    <div class="service-card__body">
+      <h3 class="service-card__title">{title}</h3>
+      {shortDescription && <p class="service-card__desc">{shortDescription}</p>}
+      <div class="service-card__footer">
+        <span class="service-card__price">{price}</span>
+        <a href={`/diensten/${slug}`} class="arrow-link">
+          Meer info
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .service-card {
+    border: 1px solid var(--border);
+    background: var(--warm-white);
+    transition: box-shadow var(--transition), transform var(--transition);
+  }
+
+  .service-card:hover {
+    box-shadow: 0 8px 32px rgba(26, 24, 20, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .service-card__number {
+    display: block;
+    margin-bottom: 1.25rem;
+    color: var(--accent);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+  }
+
+  .service-card__image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .service-card:hover .service-card__image img {
+    transform: scale(1.04);
+  }
+
+  .service-card__image--placeholder {
+    background: var(--cream);
+  }
+
+  .service-card__body {
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .service-card__number {
+    padding: 1.5rem 1.5rem 0;
+  }
+
+  .service-card__title {
+    font-size: 1.375rem;
+    font-weight: 300;
+    margin-bottom: 0.75rem;
+    font-family: var(--font-heading);
+  }
+
+  .service-card__desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .service-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .service-card__price {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--dark);
+  }
+</style>

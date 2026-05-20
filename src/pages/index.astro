@@ -103,6 +103,40 @@ const displayTestimonials = testimonials.slice(0, 3);
   </section>
 
   
+  <!-- SERVICES -->
+  <section class="services-section section">
+    <div class="container">
+      <div class="products-section__header">
+        <div>
+          <span class="label fade-in">Wat wij doen</span>
+          <h2 class="fade-in fade-in-delay-1">Onze diensten</h2>
+        </div>
+        <a href="/diensten" class="arrow-link fade-in">
+          Alle diensten bekijken
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid-3">
+        {featuredServices.slice(0, 3).map((service, i) => (
+          <div class={`fade-in fade-in-delay-${i + 1}`}>
+            <ServiceCard
+              title={service.title}
+              slug={service.slug}
+              shortDescription={service.shortDescription}
+              price={service.price}
+              imageUrl={service.imageUrl}
+              imageAlt={service.imageAlt}
+              number={String(i + 1).padStart(2, '0')}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
 
 <style>

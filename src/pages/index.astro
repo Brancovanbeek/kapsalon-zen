@@ -25,7 +25,7 @@ const displayTestimonials = testimonials.slice(0, 3);
 ---
 
 <BaseLayout
-  title="Kapsalon Zen - Vakmanschap voor uw haar"
+  title="Vakmanschap voor uw haar"
   description={heroSubtext}
 >
   <!-- HERO -->
@@ -43,7 +43,7 @@ const displayTestimonials = testimonials.slice(0, 3);
 
       <div class="hero__images">
         {heroImages.length > 0
-          ? heroImages.slice(0, 4).map((img: any, i: number) => (
+          ? heroImages.slice(0, 4).map((img, i) => (
               <div class={`hero__image-cell hero__image-cell--${i + 1}`}>
                 <img
                   src={`${img.imageUrl}?w=800&auto=format`}

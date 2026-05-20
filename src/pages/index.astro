@@ -157,6 +157,41 @@ const displayTestimonials = testimonials.slice(0, 3);
     </div>
   </div>
 
+  <!-- FEATURED PRODUCTS -->
+  <section class="products-section section">
+    <div class="container">
+      <div class="products-section__header">
+        <div>
+          <span class="label fade-in">Onze producten</span>
+          <h2 class="fade-in fade-in-delay-1">Meegenomen naar huis</h2>
+        </div>
+        <a href="/producten" class="arrow-link fade-in">
+          Bekijk alle producten
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid-3">
+        {featuredProducts.map((product, i) => (
+          <div class={`fade-in fade-in-delay-${i + 1}`}>
+            <ProductCard
+              title={product.title}
+              slug={product.slug}
+              brand={product.brand}
+              price={product.price}
+              imageUrl={product.imageUrl}
+              imageAlt={product.imageAlt}
+              inStock={product.inStock}
+              category={product.category}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
 
 <style>

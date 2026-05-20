@@ -1,0 +1,637 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import {
+  getHomePage,
+  getFeaturedServices,
+  getFeaturedProducts,
+  getAllTestimonials,
+  srcset,
+} from '../lib/sanity.js';
+
+const homePage         = await getHomePage().catch(() => null);
+const featuredServices = await getFeaturedServices().catch(() => []);
+const featuredProducts = await getFeaturedProducts().catch(() => []);
+const testimonials     = await getAllTestimonials().catch(() => []);
+
+const heroHeadline = homePage?.heroHeadline ?? 'Vakmanschap voor uw haar';
+const heroSubtext  = homePage?.heroSubtext  ?? 'Bij Kapsalon Zen combineren we ambacht met persoonlijke aandacht. Welkom in een plek van rust en kwaliteit.';
+const heroImages   = homePage?.heroImages   ?? [];
+const aboutHeading = homePage?.aboutHeading ?? 'Een plek van rust en vakmanschap';
+const aboutText    = homePage?.aboutText    ?? 'Al meer dan twaalf jaar verwelkomen wij onze gasten in een sfeervolle en rustige omgeving. Wij geloven in persoonlijke aandacht, kwaliteitsproducten en een resultaat waar u blij van wordt.';
+
+const displayTestimonials = testimonials.slice(0, 3);
+---
+
+<BaseLayout
+  title="Vakmanschap voor uw haar"
+  description={heroSubtext}
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <span class="label hero__label fade-in">Jouw lokale kapsalon</span>
+        <h1 class="hero__headline fade-in fade-in-delay-1">{heroHeadline}</h1>
+        <p class="hero__subtext fade-in fade-in-delay-2">{heroSubtext}</p>
+        <div class="hero__actions fade-in fade-in-delay-3">
+          <a href="/contact" class="btn btn-primary">Afspraak maken</a>
+          <a href="/diensten" class="btn btn-ghost">Bekijk diensten</a>
+        </div>
+      </div>
+
+      <div class="hero__images">
+        {heroImages.length > 0
+          ? heroImages.slice(0, 4).map((img, i) => (
+              <div class={`hero__image-cell hero__image-cell--${i + 1}`}>
+                <img
+                  src={`${img.imageUrl}?w=800&auto=format`}
+                  srcset={srcset(img.imageUrl)}
+                  sizes="(min-width: 1024px) 25vw, 50vw"
+                  alt={img.alt ?? `Kapsalon Zen — sfeerfoto ${i + 1}`}
+                  loading="eager"
+                  width="350"
+                  height="450"
+                />
+              </div>
+            ))
+          : [1, 2, 3, 4].map((n) => (
+              <div class={`hero__image-cell hero__image-cell--${n} hero__image-cell--placeholder`}></div>
+            ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about section">
+    <div class="container about__inner">
+      <div class="about__image-wrap fade-in">
+        {homePage?.aboutImageUrl
+          ? (
+              <img
+                src={`${homePage.aboutImageUrl}?w=800&auto=format`}
+                srcset={srcset(homePage.aboutImageUrl)}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                alt={homePage.aboutImageAlt ?? 'Over Kapsalon Zen'}
+                loading="lazy"
+                width="400"
+                height="550"
+                class="about__image"
+              />
+            )
+          : (
+              <div class="about__image about__image--placeholder"></div>
+            )
+        }
+      </div>
+
+      <div class="about__content">
+        <span class="label fade-in">Over ons</span>
+        <h2 class="about__heading fade-in fade-in-delay-1">{aboutHeading}</h2>
+        <div class="divider fade-in fade-in-delay-1"></div>
+        <p class="about__text fade-in fade-in-delay-2">{aboutText}</p>
+        <a href="/over-ons" class="arrow-link fade-in fade-in-delay-3">
+          Meer over ons
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- SERVICES -->
+  <section class="services-section section">
+    <div class="container">
+      <div class="products-section__header">
+        <div>
+          <span class="label fade-in">Wat wij doen</span>
+          <h2 class="fade-in fade-in-delay-1">Onze diensten</h2>
+        </div>
+        <a href="/diensten" class="arrow-link fade-in">
+          Alle diensten bekijken
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid-3">
+        {featuredServices.slice(0, 3).map((service, i) => (
+          <div class={`fade-in fade-in-delay-${i + 1}`}>
+            <ServiceCard
+              title={service.title}
+              slug={service.slug}
+              shortDescription={service.shortDescription}
+              price={service.price}
+              imageUrl={service.imageUrl}
+              imageAlt={service.imageAlt}
+              number={String(i + 1).padStart(2, '0')}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR --> 
+  <div class="stats-bar">
+    <div class="container stats-bar__inner">
+      <div class="stat fade-in">
+        <span class="stat__number">20+</span>
+        <span class="stat__label">jaar ervaring</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat fade-in fade-in-delay-1">
+        <span class="stat__number">500+</span>
+        <span class="stat__label">tevreden klanten</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat fade-in fade-in-delay-2">
+        <span class="stat__number">1</span>
+        <span class="stat__label">locatie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="products-section section">
+    <div class="container">
+      <div class="products-section__header">
+        <div>
+          <span class="label fade-in">Onze producten</span>
+          <h2 class="fade-in fade-in-delay-1">Meegenomen naar huis</h2>
+        </div>
+        <a href="/producten" class="arrow-link fade-in">
+          Bekijk alle producten
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid-3">
+        {featuredProducts.map((product, i) => (
+          <div class={`fade-in fade-in-delay-${i + 1}`}>
+            <ProductCard
+              title={product.title}
+              slug={product.slug}
+              brand={product.brand}
+              price={product.price}
+              imageUrl={product.imageUrl}
+              imageAlt={product.imageAlt}
+              inStock={product.inStock}
+              category={product.category}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <!-- Top label strip -->
+    <div class="testimonials__header">
+      <div class="container testimonials__header-inner">
+        <span class="label">Wat klanten zeggen</span>
+        <div class="testimonials__stars-row" aria-hidden="true">★★★★★</div>
+      </div>
+    </div>
+
+    <!-- Featured quote biggest -->
+    <div class="testimonials__featured">
+      <div class="container">
+        <blockquote class="testimonial-featured fade-in">
+          <span class="testimonial-featured__mark" aria-hidden="true">"</span>
+          <p class="testimonial-featured__quote">{displayTestimonials[0]?.quote}</p>
+          <footer class="testimonial-featured__footer">
+            <span class="testimonial-featured__stars" aria-label={`${displayTestimonials[0]?.rating ?? 5} van 5 sterren`}>
+              {'★'.repeat(displayTestimonials[0]?.rating ?? 5)}{'☆'.repeat(5 - (displayTestimonials[0]?.rating ?? 5))}
+            </span>
+            <span class="testimonial-featured__name">— {displayTestimonials[0]?.name}</span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- Secondary quotes row -->
+    {displayTestimonials.length > 1 && (
+      <div class="testimonials__secondary">
+        <div class="container testimonials__secondary-inner">
+          {displayTestimonials.slice(1).map((t, i) => (
+            <blockquote class={`testimonial-card fade-in fade-in-delay-${i + 1}`}>
+              <p class="testimonial-card__stars" aria-label={`${t.rating ?? 5} van 5 sterren`}>
+                {'★'.repeat(t.rating ?? 5)}{'☆'.repeat(5 - (t.rating ?? 5))}
+              </p>
+              <p class="testimonial-card__quote">"{t.quote}"</p>
+              <footer class="testimonial-card__name">— {t.name}</footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    )}
+
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <div class="container cta-banner__inner">
+      <div class="cta-banner__content fade-in">
+        <span class="label">Wacht niet langer</span>
+        <h2 class="cta-banner__heading">Klaar voor een nieuwe look?</h2>
+        <p class="cta-banner__sub">Plan vandaag nog uw afspraak bij Kapsalon Zen.</p>
+      </div>
+      <a href="/contact" class="btn btn-ghost-light fade-in fade-in-delay-1">Afspraak maken</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /*  Hero */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding: 7rem 0 4rem;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .hero__label {
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__headline {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero__subtext {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 460px;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* Hero image grid */
+  .hero__images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0.75rem;
+    height: 400px;
+  }
+
+  .hero__image-cell {
+    overflow: hidden;
+  }
+
+  .hero__image-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero__image-cell--1 {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .hero__image-cell--2 {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .hero__image-cell--3 {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .hero__image-cell--4 {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
+  .hero__image-cell--placeholder {
+    background: var(--cream);
+  }
+
+  /* About */
+  .about__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .about__image-wrap {
+    position: relative;
+  }
+
+  .about__image {
+    width: 100%;
+    height: 580px;
+    object-fit: cover;
+  }
+
+  .about__image--placeholder {
+    width: 100%;
+    height: 580px;
+    background: var(--cream);
+  }
+
+  .about__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .about__content .label {
+    margin-bottom: 1rem;
+  }
+
+  .about__heading {
+    margin-bottom: 0;
+  }
+
+  .about__text {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    background: var(--dark);
+    padding: 3.5rem 0;
+  }
+
+  .stats-bar__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat__number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat__label {
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.5);
+  }
+
+  .stat-divider {
+    width: 48px;
+    height: 1px;
+    background: rgba(245, 240, 232, 0.15);
+  }
+
+  /* Products section */
+  .products-section__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+    gap: 2rem;
+  }
+
+  /* Testimonials */
+  .testimonials {
+    background: var(--dark);
+  }
+
+  /* Header strip */
+  .testimonials__header {
+    border-bottom: 1px solid rgba(245, 240, 232, 0.1);
+    padding: 1.5rem 0;
+  }
+
+  .testimonials__header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .testimonials__header .label {
+    color: rgba(245, 240, 232, 0.45);
+  }
+
+  .testimonials__stars-row {
+    color: var(--accent);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+  }
+
+  /* Featured quote */
+  .testimonials__featured {
+    padding: 5rem 0 4rem;
+    border-bottom: 1px solid rgba(245, 240, 232, 0.1);
+  }
+
+  .testimonial-featured {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+  }
+
+  .testimonial-featured__mark {
+    font-family: var(--font-heading);
+    font-size: clamp(6rem, 12vw, 10rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 0.6;
+    display: block;
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
+  }
+
+  .testimonial-featured__quote {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.45;
+    margin-bottom: 2rem;
+  }
+
+  .testimonial-featured__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .testimonial-featured__stars {
+    color: var(--accent);
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+  }
+
+  .testimonial-featured__name {
+    font-size: 0.875rem;
+    color: rgba(245, 240, 232, 0.5);
+    letter-spacing: 0.08em;
+  }
+
+  /* Secondary cards */
+  .testimonials__secondary {
+    padding: 3rem 0 4rem;
+  }
+
+  .testimonials__secondary-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid rgba(245, 240, 232, 0.1);
+  }
+
+  .testimonial-card {
+    padding: 2.5rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(245, 240, 232, 0.1);
+  }
+
+  .testimonial-card:last-child {
+    border-bottom: none;
+  }
+
+  .testimonial-card__stars {
+    color: var(--accent);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+
+  .testimonial-card__quote {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245, 240, 232, 0.8);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .testimonial-card__name {
+    font-size: 0.8rem;
+    color: rgba(245, 240, 232, 0.4);
+    letter-spacing: 0.08em;
+  }
+
+
+  /* Services & products section */
+  .services-section,
+  .products-section {
+    background: var(--cream);
+  }
+
+  /* Responsive */
+  @media (min-width: 601px) {
+    .hero__actions {
+      flex-direction: row;
+    }
+
+    .stats-bar__inner {
+      flex-direction: row;
+      gap: 2rem;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 48px;
+    }
+
+    .products-section__header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .hero {
+      padding: 8rem 0 4rem;
+    }
+
+    .hero__inner,
+    .about__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .about__inner {
+      gap: 5rem;
+    }
+
+    .hero__images {
+      height: 580px;
+    }
+
+    .hero__image-cell--1 {
+      transform: translateY(1.5rem);
+    }
+
+    .hero__image-cell--4 {
+      transform: translateY(-1.5rem);
+    }
+
+    .stats-bar__inner {
+      gap: 4rem;
+    }
+
+    .testimonials__secondary-inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .testimonial-card {
+      border-right: 1px solid rgba(245, 240, 232, 0.1);
+      border-bottom: none;
+    }
+
+    .testimonial-card:last-child {
+      border-right: none;
+      border-bottom: none;
+    }
+  }
+</style>

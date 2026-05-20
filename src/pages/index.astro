@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import {
+  getHomePage,
+  getFeaturedServices,
+  getFeaturedProducts,
+  getAllTestimonials,
+  srcset,
+} from '../lib/sanity.js';
+
+const homePage         = await getHomePage().catch(() => null);
+const featuredServices = await getFeaturedServices().catch(() => []);
+const featuredProducts = await getFeaturedProducts().catch(() => []);
+const testimonials     = await getAllTestimonials().catch(() => []);
+
+const heroHeadline = homePage?.heroHeadline ?? 'Vakmanschap voor uw haar';
+const heroSubtext  = homePage?.heroSubtext  ?? 'Bij Kapsalon Zen combineren we ambacht met persoonlijke aandacht. Welkom in een plek van rust en kwaliteit.';
+const heroImages   = homePage?.heroImages   ?? [];
+const aboutHeading = homePage?.aboutHeading ?? 'Een plek van rust en vakmanschap';
+const aboutText    = homePage?.aboutText    ?? 'Al meer dan twaalf jaar verwelkomen wij onze gasten in een sfeervolle en rustige omgeving. Wij geloven in persoonlijke aandacht, kwaliteitsproducten en een resultaat waar u blij van wordt.';
+
+const displayTestimonials = testimonials.slice(0, 3);
+---
+
+<BaseLayout
+  title="Kapsalon Zen - Vakmanschap voor uw haar"
+  description={heroSubtext}
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <span class="label hero__label fade-in">Jouw lokale kapsalon</span>
+        <h1 class="hero__headline fade-in fade-in-delay-1">{heroHeadline}</h1>
+        <p class="hero__subtext fade-in fade-in-delay-2">{heroSubtext}</p>
+        <div class="hero__actions fade-in fade-in-delay-3">
+          <a href="/contact" class="btn btn-primary">Afspraak maken</a>
+          <a href="/diensten" class="btn btn-ghost">Bekijk diensten</a>
+        </div>
+      </div>
+
+      <div class="hero__images">
+        {heroImages.length > 0
+          ? heroImages.slice(0, 4).map((img: any, i: number) => (
+              <div class={`hero__image-cell hero__image-cell--${i + 1}`}>
+                <img
+                  src={`${img.imageUrl}?w=800&auto=format`}
+                  srcset={srcset(img.imageUrl)}
+                  sizes="(min-width: 1024px) 25vw, 50vw"
+                  alt={img.alt ?? `Kapsalon Zen — sfeerfoto ${i + 1}`}
+                  loading="eager"
+                  width="350"
+                  height="450"
+                />
+              </div>
+            ))
+          : [1, 2, 3, 4].map((n) => (
+              <div class={`hero__image-cell hero__image-cell--${n} hero__image-cell--placeholder`}></div>
+            ))
+        }
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

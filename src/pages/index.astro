@@ -192,6 +192,51 @@ const displayTestimonials = testimonials.slice(0, 3);
     </div>
   </section>
 
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <!-- Top label strip -->
+    <div class="testimonials__header">
+      <div class="container testimonials__header-inner">
+        <span class="label">Wat klanten zeggen</span>
+        <div class="testimonials__stars-row" aria-hidden="true">★★★★★</div>
+      </div>
+    </div>
+
+    <!-- Featured quote biggest -->
+    <div class="testimonials__featured">
+      <div class="container">
+        <blockquote class="testimonial-featured fade-in">
+          <span class="testimonial-featured__mark" aria-hidden="true">"</span>
+          <p class="testimonial-featured__quote">{displayTestimonials[0]?.quote}</p>
+          <footer class="testimonial-featured__footer">
+            <span class="testimonial-featured__stars" aria-label={`${displayTestimonials[0]?.rating ?? 5} van 5 sterren`}>
+              {'★'.repeat(displayTestimonials[0]?.rating ?? 5)}{'☆'.repeat(5 - (displayTestimonials[0]?.rating ?? 5))}
+            </span>
+            <span class="testimonial-featured__name">— {displayTestimonials[0]?.name}</span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- Secondary quotes row -->
+    {displayTestimonials.length > 1 && (
+      <div class="testimonials__secondary">
+        <div class="container testimonials__secondary-inner">
+          {displayTestimonials.slice(1).map((t, i) => (
+            <blockquote class={`testimonial-card fade-in fade-in-delay-${i + 1}`}>
+              <p class="testimonial-card__stars" aria-label={`${t.rating ?? 5} van 5 sterren`}>
+                {'★'.repeat(t.rating ?? 5)}{'☆'.repeat(5 - (t.rating ?? 5))}
+              </p>
+              <p class="testimonial-card__quote">"{t.quote}"</p>
+              <footer class="testimonial-card__name">— {t.name}</footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    )}
+
+  </section>
+
 </BaseLayout>
 
 <style>

@@ -290,3 +290,45 @@ const displayTestimonials = testimonials.slice(0, 3);
     margin-bottom: 2rem;
   }
 
+  /* Stats bar */
+  .stats-bar {
+    background: var(--dark);
+    padding: 3.5rem 0;
+  }
+
+  .stats-bar__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat__number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat__label {
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.5);
+  }
+
+  .stat-divider {
+    width: 48px;
+    height: 1px;
+    background: rgba(245, 240, 232, 0.15);
+  }
+

@@ -64,6 +64,45 @@ const displayTestimonials = testimonials.slice(0, 3);
     </div>
   </section>
 
+  <!-- ABOUT -->
+  <section class="about section">
+    <div class="container about__inner">
+      <div class="about__image-wrap fade-in">
+        {homePage?.aboutImageUrl
+          ? (
+              <img
+                src={`${homePage.aboutImageUrl}?w=800&auto=format`}
+                srcset={srcset(homePage.aboutImageUrl)}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                alt={homePage.aboutImageAlt ?? 'Over Kapsalon Zen'}
+                loading="lazy"
+                width="400"
+                height="550"
+                class="about__image"
+              />
+            )
+          : (
+              <div class="about__image about__image--placeholder"></div>
+            )
+        }
+      </div>
+
+      <div class="about__content">
+        <span class="label fade-in">Over ons</span>
+        <h2 class="about__heading fade-in fade-in-delay-1">{aboutHeading}</h2>
+        <div class="divider fade-in fade-in-delay-1"></div>
+        <p class="about__text fade-in fade-in-delay-2">{aboutText}</p>
+        <a href="/over-ons" class="arrow-link fade-in fade-in-delay-3">
+          Meer over ons
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  
 </BaseLayout>
 
 <style>

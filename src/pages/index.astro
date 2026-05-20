@@ -566,3 +566,72 @@ const displayTestimonials = testimonials.slice(0, 3);
     background: var(--cream);
   }
 
+  /* Responsive */
+  @media (min-width: 601px) {
+    .hero__actions {
+      flex-direction: row;
+    }
+
+    .stats-bar__inner {
+      flex-direction: row;
+      gap: 2rem;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 48px;
+    }
+
+    .products-section__header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .hero {
+      padding: 8rem 0 4rem;
+    }
+
+    .hero__inner,
+    .about__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .about__inner {
+      gap: 5rem;
+    }
+
+    .hero__images {
+      height: 580px;
+    }
+
+    .hero__image-cell--1 {
+      transform: translateY(1.5rem);
+    }
+
+    .hero__image-cell--4 {
+      transform: translateY(-1.5rem);
+    }
+
+    .stats-bar__inner {
+      gap: 4rem;
+    }
+
+    .testimonials__secondary-inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .testimonial-card {
+      border-right: 1px solid rgba(245, 240, 232, 0.1);
+      border-bottom: none;
+    }
+
+    .testimonial-card:last-child {
+      border-right: none;
+      border-bottom: none;
+    }
+  }
+</style>

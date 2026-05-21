@@ -89,3 +89,121 @@ const settings = await getSiteSettings().catch(() => null);
     </section>
   </main>
 </BaseLayout>
+
+<style>
+  /* Intro */
+  .intro__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .intro__content p {
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .intro__content p + p {
+    margin-top: 1rem;
+  }
+
+  .intro__content .label {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .intro__content h2 {
+    margin-bottom: 0;
+  }
+
+  .intro__stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .intro-stat__number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1;
+    margin-bottom: 0.375rem;
+  }
+
+  .intro-stat__label {
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Values */
+  .values__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .value-card {
+    padding: 2.5rem 2rem;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .value-card__icon {
+    font-size: 1.5rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .value-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
+  .value-card__desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* Values section */
+  .values {
+    background: var(--cream);
+  }
+
+  /* Responsive */
+  @media (min-width: 769px) {
+    .values__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .intro__inner {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 5rem;
+    }
+
+    .intro__stats {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 2rem;
+      padding-top: 0;
+      padding-left: 3rem;
+      border-top: none;
+      border-left: 1px solid var(--border);
+    }
+  }
+</style>

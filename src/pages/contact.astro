@@ -159,3 +159,201 @@ const facebook  = settings?.facebook  ?? 'https://www.facebook.com/p/Kapsalon-ze
     </section>
   </main>
 </BaseLayout>
+
+<style>
+  /* Contact layout */
+  .contact-section__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* Contact info */
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .contact-info__heading {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.875rem;
+  }
+
+  .contact-info__text {
+    font-style: normal;
+    font-size: 0.95rem;
+    color: var(--dark);
+    white-space: pre-line;
+    line-height: 1.7;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.95rem;
+    color: var(--dark);
+    transition: color var(--transition);
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-link:hover {
+    color: var(--accent);
+  }
+
+  /* Hours table */
+  .hours-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .hours-table td {
+    padding: 0.35rem 0;
+    color: var(--dark);
+  }
+
+  .hours-table td:last-child {
+    text-align: right;
+    color: var(--muted);
+  }
+
+  .hours-table tr.closed td {
+    color: var(--muted);
+  }
+
+  /* Social links */
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.9rem;
+    color: var(--dark);
+    transition: color var(--transition);
+  }
+
+  .social-link:hover {
+    color: var(--accent);
+  }
+
+  /* Form */
+  .contact-form-wrap {
+    background: var(--cream);
+    padding: 2rem 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  .contact-form-wrap__heading {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-form-wrap__sub {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dark);
+  }
+
+  .form-label span {
+    color: var(--accent);
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--border);
+    background: var(--warm-white);
+    color: var(--dark);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color var(--transition);
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+
+  .form-input:focus {
+    border-color: var(--dark);
+  }
+
+  .form-input::placeholder {
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .form-submit {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  .form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  .form-success {
+    color: var(--accent);
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Responsive */
+  @media (min-width: 601px) {
+    .contact-form-wrap {
+      padding: 3rem;
+    }
+  }
+
+  @media (min-width: 901px) {
+    .contact-section__inner {
+      grid-template-columns: 1fr 1.5fr;
+      gap: 5rem;
+    }
+  }
+</style>

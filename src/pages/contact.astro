@@ -357,3 +357,42 @@ const facebook  = settings?.facebook  ?? 'https://www.facebook.com/p/Kapsalon-ze
     }
   }
 </style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const btn = document.getElementById('form-btn') as HTMLButtonElement;
+  const label = btn.querySelector('.form-btn__label') as HTMLElement;
+  const success = document.getElementById('form-success') as HTMLElement;
+
+  form.addEventListener('submit', async (e) => {
+    // Voorkom dat de browser de pagina herlaadt bij submit
+    e.preventDefault();
+
+    // Zet de knop in loading state
+    btn.disabled = true;
+    label.textContent = 'Versturen…';
+
+    try {
+      // Stuur het formulier naar Formspree via fetch (geen pagina-redirect)
+      // Accept: application/json zorgt dat Formspree JSON teruggeeft i.p.v. een HTML-pagina
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+
+      if (res.ok) {
+        // Succes: formulier leegmaken, knop verbergen, melding tonen
+        form.reset();
+        btn.hidden = true;
+        success.hidden = false;
+      } else {
+        throw new Error('server error');
+      }
+    } catch {
+      // Fout (netwerk of server): foutmelding tonen en knop heractiveren
+      label.textContent = 'Er ging iets mis, probeer het opnieuw';
+      btn.disabled = false;
+    }
+  });
+</script>

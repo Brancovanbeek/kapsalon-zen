@@ -28,6 +28,7 @@ export async function getAllServices() {
     title,
     "slug": slug.current,
     shortDescription,
+    description,
     price,
     featured,
     "imageUrl": image.asset->url,
@@ -66,12 +67,15 @@ export async function getAllProducts() {
     title,
     "slug": slug.current,
     brand,
+    shortDescription,
+    description,
     price,
     category,
     inStock,
     featured,
     "imageUrl": image.asset->url,
-    "imageAlt": image.alt
+    "imageAlt": image.alt,
+    "galleryImages": images[]{"url": asset->url, "alt": alt}
   }`);
 }
 

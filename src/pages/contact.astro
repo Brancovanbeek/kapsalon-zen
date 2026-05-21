@@ -359,10 +359,11 @@ const facebook  = settings?.facebook  ?? 'https://www.facebook.com/p/Kapsalon-ze
 </style>
 
 <script>
-  const form = document.getElementById('contact-form') as HTMLFormElement;
-  const btn = document.getElementById('form-btn') as HTMLButtonElement;
-  const label = btn.querySelector('.form-btn__label') as HTMLElement;
-  const success = document.getElementById('form-success') as HTMLElement;
+  // @ts-nocheck
+  const form = document.getElementById('contact-form');
+  const btn = document.getElementById('form-btn');
+  const label = btn.querySelector('.form-btn__label');
+  const success = document.getElementById('form-success');
 
   form.addEventListener('submit', async (e) => {
     // Voorkom dat de browser de pagina herlaadt bij submit

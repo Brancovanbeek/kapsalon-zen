@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { getSiteSettings } from '../lib/sanity.js';
+
+const settings = await getSiteSettings().catch(() => null);
+---
+
+<BaseLayout
+  title="Over ons"
+  description="Ontdek het verhaal achter Kapsalon Zen — onze waarden en onze passie voor haar."
+>
+
+  <main>
+    <PageHeader
+      label="Ons verhaal"
+      title="Over Kapsalon Zen"
+      sub={settings?.tagline ?? 'Een plek van vakmanschap, rust en persoonlijke aandacht.'}
+    />
+
+    <!-- Intro section -->
+    <section class="intro section">
+      <div class="container intro__inner">
+        <div class="intro__content">
+          <span class="label fade-in">Wie ik ben</span>
+          <h2 class="fade-in fade-in-delay-1">Meer dan een kapsalon</h2>
+          <div class="divider fade-in fade-in-delay-1"></div>
+          <p class="fade-in fade-in-delay-2">
+            Kapsalon Zen is opgericht vanuit een simpele overtuiging: een bezoek aan de kapper moet een moment van rust en zelfzorg zijn. Ik combineer jarenlange expertise met een warme, persoonlijke benadering. Als eenvrouwszaak krijgt u altijd mijn volledige aandacht.
+          </p>
+          <p class="fade-in fade-in-delay-2">
+            Ik werk met geselecteerde professionele producten, volg de nieuwste trends en technieken, maar blijf altijd trouw aan wat u het mooist staat, niet wat op dit moment populair is.
+          </p>
+        </div>
+        <div class="intro__stats fade-in fade-in-delay-3">
+          <div class="intro-stat">
+            <span class="intro-stat__number">30+</span>
+            <span class="intro-stat__label">Jaar ervaring</span>
+          </div>
+          <div class="intro-stat">
+            <span class="intro-stat__number">500+</span>
+            <span class="intro-stat__label">Tevreden klanten</span>
+          </div>
+          <div class="intro-stat">
+            <span class="intro-stat__number">100%</span>
+            <span class="intro-stat__label">Met hart & ziel</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values section -->
+    <section class="values section">
+      <div class="container">
+        <div class="section-header">
+          <span class="label fade-in">Waar we voor staan</span>
+          <h2 class="fade-in fade-in-delay-1">Onze kernwaarden</h2>
+        </div>
+        <div class="values__grid">
+          <div class="value-card fade-in fade-in-delay-1">
+            <span class="value-card__icon" aria-hidden="true">◈</span>
+            <h3 class="value-card__title">Kwaliteit</h3>
+            <p class="value-card__desc">Ik werk uitsluitend met professionele producten die goed presteren en uw haar in de beste conditie houden.</p>
+          </div>
+          <div class="value-card fade-in fade-in-delay-2">
+            <span class="value-card__icon" aria-hidden="true">◎</span>
+            <h3 class="value-card__title">Rust</h3>
+            <p class="value-card__desc">De salon is ontworpen als een plek van ontspanning. U komt binnen als gast en vertrekt als uzelf.</p>
+          </div>
+          <div class="value-card fade-in fade-in-delay-3">
+            <span class="value-card__icon" aria-hidden="true">◇</span>
+            <h3 class="value-card__title">Vakmanschap</h3>
+            <p class="value-card__desc">Elk kapsel is maatwerk. Ik luister naar u, adviseer eerlijk en werk met precisie aan het resultaat.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <div class="container cta-banner__inner">
+        <div class="fade-in">
+          <span class="label">Maak kennis</span>
+          <h2 class="cta-banner__heading">Kom langs en ervaar het zelf</h2>
+          <p class="cta-banner__sub">Plan een afspraak en ontdek wat ik voor u kan betekenen.</p>
+        </div>
+        <a href="/contact" class="btn btn-ghost-light fade-in fade-in-delay-1">Afspraak maken</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

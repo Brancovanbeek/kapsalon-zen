@@ -191,7 +191,7 @@ p { line-height: 1.75; }
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(100px);
   }
   to {
     opacity: 1;
@@ -200,11 +200,11 @@ p { line-height: 1.75; }
 }
 
 @supports (animation-timeline: view()) {
-  .fade-in         { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 0%  entry 25%; }
-  .fade-in-delay-1 { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 4%  entry 29%; }
-  .fade-in-delay-2 { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 8%  entry 33%; }
-  .fade-in-delay-3 { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 12% entry 37%; }
-  .fade-in-delay-4 { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 16% entry 41%; }
+  .fade-in         { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 0%  cover 35%; }
+  .fade-in-delay-1 { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 5%  cover 40%; }
+  .fade-in-delay-2 { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 10% cover 45%; }
+  .fade-in-delay-3 { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 15% cover 50%; }
+  .fade-in-delay-4 { animation: fade-up 0.6s ease both; animation-timeline: view(); animation-range: entry 20% cover 55%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

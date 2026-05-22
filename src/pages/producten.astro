@@ -47,7 +47,7 @@ const categories = [
           <div class="product-grid" id="product-grid">
             {products.map((product, i) => (
               <div
-                class={`fade-in fade-in-delay-${Math.min((i % 3) + 1, 4)}`}
+                class={`fade-in fade-in-delay-${(i % 3) + 1}`}
                 data-category={product.category}
               >
                 <ProductCard
@@ -75,18 +75,22 @@ const categories = [
 <script>
   // @ts-nocheck
 
-  // Lees de actieve categorie uit de URL, standaard 'alle'
-  const cat = new URLSearchParams(location.search).get('cat') ?? 'alle';
+  // Valideer de categorie uit de URL tegen de bekende waarden
+  const validCats = ['alle', 'shampoo', 'conditioner', 'styling', 'treatment', 'overig'];
+  const raw = new URLSearchParams(location.search).get('cat') ?? 'alle';
+  const cat = validCats.includes(raw) ? raw : 'alle';
 
-  // Markeer de juiste filterknop als actief
+  // Markeer de juiste filterknop als actief en communiceer dit aan screenreaders
   document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.toggle('filter-btn--active', btn.dataset.cat === cat);
+    const isActive = btn.dataset.cat === cat;
+    btn.classList.toggle('filter-btn--active', isActive);
+    if (isActive) btn.setAttribute('aria-current', 'page');
   });
 
   // Verberg kaarten die niet bij de gekozen categorie horen
   if (cat !== 'alle') {
     let visible = 0;
-    document.querySelectorAll('#product-grid [data-category]').forEach(card => {
+    document.querySelectorAll('#product-grid > [data-category]').forEach(card => {
       const show = card.dataset.category === cat;
       card.hidden = !show;
       if (show) visible++;

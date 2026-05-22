@@ -2,7 +2,7 @@
 // @ts-nocheck
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import { getAllProducts, portableTextToHtml, formatPrice, srcset } from '../../lib/sanity.js';
+import { getAllProducts, getSiteSettings, portableTextToHtml, formatPrice, srcset } from '../../lib/sanity.js';
 
 export async function getStaticPaths() {
   // Haal alle producten één keer op uit Sanity
@@ -22,6 +22,7 @@ export async function getStaticPaths() {
 }
 
 const { product, related } = Astro.props;
+const settings = await getSiteSettings().catch(() => null);
 ---
 
 <BaseLayout
@@ -62,7 +63,7 @@ const { product, related } = Astro.props;
         {product.galleryImages?.length > 0 && (
           <div class="product-gallery__thumbs">
             {product.galleryImages.map((img) => (
-              <a href={`${img.url}?auto=format`} target="_blank" rel="noopener" class="thumb" aria-label={img.alt ?? product.title}>
+              <a href={`${img.url}?auto=format`} target="_blank" rel="noopener noreferrer" class="thumb" aria-label={img.alt ?? product.title}>
                 <img
                   src={`${img.url}?w=150&auto=format`}
                   srcset={`${img.url}?w=72&auto=format 72w, ${img.url}?w=150&auto=format 150w`}

@@ -72,6 +72,32 @@ const categories = [
   </main>
 </BaseLayout>
 
+<script>
+  // @ts-nocheck
+
+  // Lees de actieve categorie uit de URL, standaard 'alle'
+  const cat = new URLSearchParams(location.search).get('cat') ?? 'alle';
+
+  // Markeer de juiste filterknop als actief
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.toggle('filter-btn--active', btn.dataset.cat === cat);
+  });
+
+  // Verberg kaarten die niet bij de gekozen categorie horen
+  if (cat !== 'alle') {
+    let visible = 0;
+    document.querySelectorAll('#product-grid [data-category]').forEach(card => {
+      const show = card.dataset.category === cat;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+
+    // 'geen resultaten' melding als er niets overblijft
+    const noResults = document.getElementById('no-results');
+    if (noResults) noResults.hidden = visible !== 0;
+  }
+</script>
+
 <style>
   .filter-bar {
     display: flex;

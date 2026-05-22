@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { getAllProducts } from '../lib/sanity.js';
+
+const products = await getAllProducts().catch(() => []);
+
+const categories = [
+  { value: 'alle', label: 'Alle' },
+  { value: 'shampoo', label: 'Shampoo' },
+  { value: 'conditioner', label: 'Conditioner' },
+  { value: 'styling', label: 'Styling' },
+  { value: 'treatment', label: 'Treatment' },
+  { value: 'overig', label: 'Overig' },
+];
+
+---
+
+<BaseLayout
+  title="Producten"
+  description="Ontdek onze collectie professionele haarverzorgingsproducten — verkrijgbaar in de salon."
+>
+
+  <main>
+    <PageHeader
+      label="Ons assortiment"
+      title="Producten"
+      sub="Professionele haarverzorging om thuis dezelfde kwaliteit te bereiken als in de salon."
+    />
+
+    <section class="section">
+      <div class="container">
+        <nav class="filter-bar fade-in" aria-label="Filteren op categorie">
+          {categories.map((c) => (
+            <a
+              href={c.value === 'alle' ? '/producten' : `/producten?cat=${c.value}`}
+              class="filter-btn"
+              data-cat={c.value}
+            >
+              {c.label}
+            </a>
+          ))}
+        </nav>
+
+        {products.length > 0 ? (
+          <div class="product-grid" id="product-grid">
+            {products.map((product, i) => (
+              <div
+                class={`fade-in fade-in-delay-${Math.min((i % 3) + 1, 4)}`}
+                data-category={product.category}
+              >
+                <ProductCard
+                  title={product.title}
+                  slug={product.slug}
+                  brand={product.brand}
+                  price={product.price}
+                  imageUrl={product.imageUrl}
+                  imageAlt={product.imageAlt}
+                  inStock={product.inStock}
+                  category={product.category}
+                />
+              </div>
+            ))}
+          </div>
+          <p class="empty-state" id="no-results" hidden>Geen producten gevonden in deze categorie.</p>
+        ) : (
+          <p class="empty-state">Nog geen producten toegevoegd. Voeg producten toe via Sanity Studio.</p>
+        )}
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+

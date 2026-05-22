@@ -158,8 +158,8 @@ p { line-height: 1.75; }
 }
 
 .btn-primary:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: transparent;
+  border-color: var(--dark);
   color: var(--dark);
 }
 

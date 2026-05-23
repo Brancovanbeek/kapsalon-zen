@@ -22,6 +22,7 @@ export async function getStaticPaths() {
 }
 
 const { product, related } = Astro.props;
+const siteUrl = Astro.site?.origin ?? 'https://kapsalonzenvolendam.nl';
 ---
 
 <BaseLayout
@@ -43,15 +44,15 @@ const { product, related } = Astro.props;
           price: product.price,
           priceCurrency: 'EUR',
           availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-          url: `https://kapsalonzenvolendam.nl/producten/${product.slug}`,
+          url: `${siteUrl}/producten/${product.slug}`,
           seller: { '@type': 'HairSalon', name: 'Kapsalon Zen' },
         },
       },
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home',      item: 'https://kapsalonzenvolendam.nl' },
-          { '@type': 'ListItem', position: 2, name: 'Producten', item: 'https://kapsalonzenvolendam.nl/producten' },
+          { '@type': 'ListItem', position: 1, name: 'Home',      item: siteUrl },
+          { '@type': 'ListItem', position: 2, name: 'Producten', item: `${siteUrl}/producten` },
           { '@type': 'ListItem', position: 3, name: product.title },
         ],
       },

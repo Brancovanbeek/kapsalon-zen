@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { getSiteSettings } from '../lib/sanity.js';
 import '@fontsource/cormorant-garamond/300.css';
 import '@fontsource/cormorant-garamond/400.css';
 import '@fontsource/cormorant-garamond/300-italic.css';
@@ -14,6 +15,8 @@ const {
 } = Astro.props;
 
 const fullTitle = title ? `${title} | Kapsalon Zen` : 'Kapsalon Zen';
+const settings = await getSiteSettings().catch(() => null);
+const siteUrl = Astro.site?.origin ?? 'https://kapsalonzenvolendam.nl';
 ---
 
 <!doctype html>
@@ -32,10 +35,10 @@ const fullTitle = title ? `${title} | Kapsalon Zen` : 'Kapsalon Zen';
     <script is:inline type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'HairSalon',
-      name: 'Kapsalon Zen',
-      url: 'https://kapsalonzenvolendam.nl',
-      telephone: '+31640181876',
-      email: 'jcmbuijs@ziggo.nl',
+      name: settings?.salonName ?? 'Kapsalon Zen',
+      url: siteUrl,
+      telephone: settings?.phone ?? '+31640181876',
+      email: settings?.email ?? 'jcmbuijs@ziggo.nl',
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Siriusplein 1',

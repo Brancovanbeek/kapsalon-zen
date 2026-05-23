@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { service } = Astro.props;
+const siteUrl = Astro.site?.origin ?? 'https://kapsalonzenvolendam.nl';
 ---
 
 <BaseLayout
@@ -29,13 +30,14 @@ const { service } = Astro.props;
         '@type': 'Service',
         name: service.title,
         description: service.shortDescription ?? '',
-        provider: { '@type': 'HairSalon', name: 'Kapsalon Zen', url: 'https://kapsalonzenvolendam.nl' },
+        provider: { '@type': 'HairSalon', name: 'Kapsalon Zen', url: siteUrl },
+        offers: service.price ? { '@type': 'Offer', priceCurrency: 'EUR', description: service.price } : undefined,
       },
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home',     item: 'https://kapsalonzenvolendam.nl' },
-          { '@type': 'ListItem', position: 2, name: 'Diensten', item: 'https://kapsalonzenvolendam.nl/diensten' },
+          { '@type': 'ListItem', position: 1, name: 'Home',     item: siteUrl },
+          { '@type': 'ListItem', position: 2, name: 'Diensten', item: `${siteUrl}/diensten` },
           { '@type': 'ListItem', position: 3, name: service.title },
         ],
       },

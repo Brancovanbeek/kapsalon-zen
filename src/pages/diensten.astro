@@ -64,3 +64,30 @@ const services = await getAllServices().catch(() => []);
   </main>
 </BaseLayout>
 
+<style>
+  /* CTA */
+  .diensten-cta {
+    background: var(--cream);
+  }
+
+  .diensten-cta__desc {
+    color: var(--muted);
+    max-width: 520px;
+    margin-top: 1rem;
+  }
+
+  .diensten-cta__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3rem;
+  }
+
+  @media (min-width: 769px) {
+    .diensten-cta__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+</style>

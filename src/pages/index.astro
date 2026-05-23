@@ -28,6 +28,12 @@ const displayTestimonials = testimonials.slice(0, 3);
   title="Vakmanschap voor uw haar"
   description={heroSubtext}
 >
+  <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Kapsalon Zen',
+    url: Astro.site?.origin ?? 'https://kapsalonzenvolendam.nl',
+  })} />
   <!-- HERO -->
   <section class="hero">
     <div class="container hero__inner">

@@ -2,7 +2,7 @@
 // @ts-nocheck
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
-import { getAllProducts, getSiteSettings, portableTextToHtml, formatPrice, srcset } from '../../lib/sanity.js';
+import { getAllProducts, portableTextToHtml, formatPrice, srcset } from '../../lib/sanity.js';
 
 export async function getStaticPaths() {
   // Haal alle producten één keer op uit Sanity
@@ -22,7 +22,6 @@ export async function getStaticPaths() {
 }
 
 const { product, related } = Astro.props;
-const settings = await getSiteSettings().catch(() => null);
 ---
 
 <BaseLayout
@@ -30,6 +29,34 @@ const settings = await getSiteSettings().catch(() => null);
   description={product.shortDescription ?? `${product.title} — verkrijgbaar bij Kapsalon Zen`}
   ogImage={product.imageUrl ?? undefined}
 >
+  <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Product',
+        name: product.title,
+        description: product.shortDescription ?? '',
+        brand: product.brand ? { '@type': 'Brand', name: product.brand } : undefined,
+        image: product.imageUrl ? `${product.imageUrl}?w=800&auto=format` : undefined,
+        offers: {
+          '@type': 'Offer',
+          price: product.price,
+          priceCurrency: 'EUR',
+          availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+          url: `https://kapsalonzenvolendam.nl/producten/${product.slug}`,
+          seller: { '@type': 'HairSalon', name: 'Kapsalon Zen' },
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home',      item: 'https://kapsalonzenvolendam.nl' },
+          { '@type': 'ListItem', position: 2, name: 'Producten', item: 'https://kapsalonzenvolendam.nl/producten' },
+          { '@type': 'ListItem', position: 3, name: product.title },
+        ],
+      },
+    ],
+  })} />
 
   <main class="product-page">
     <div class="container back-link-wrap">

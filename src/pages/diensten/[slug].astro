@@ -22,6 +22,25 @@ const { service } = Astro.props;
   description={service.shortDescription ?? `${service.title} bij Kapsalon Zen`}
   ogImage={service.imageUrl ?? undefined}
 >
+  <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Service',
+        name: service.title,
+        description: service.shortDescription ?? '',
+        provider: { '@type': 'HairSalon', name: 'Kapsalon Zen', url: 'https://kapsalonzenvolendam.nl' },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home',     item: 'https://kapsalonzenvolendam.nl' },
+          { '@type': 'ListItem', position: 2, name: 'Diensten', item: 'https://kapsalonzenvolendam.nl/diensten' },
+          { '@type': 'ListItem', position: 3, name: service.title },
+        ],
+      },
+    ],
+  })} />
 
   <main class="dienst-page">
     <div class="container back-link-wrap">

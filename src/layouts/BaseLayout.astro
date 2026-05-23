@@ -29,6 +29,24 @@ const fullTitle = title ? `${title} | Kapsalon Zen` : 'Kapsalon Zen';
     <meta name="theme-color" content="#DDD2C0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{fullTitle}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'HairSalon',
+      name: 'Kapsalon Zen',
+      url: 'https://kapsalonzenvolendam.nl',
+      telephone: '+31640181876',
+      email: 'jcmbuijs@ziggo.nl',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Siriusplein 1',
+        addressLocality: 'Volendam',
+        addressRegion: 'Noord-Holland',
+        addressCountry: 'NL',
+      },
+      currenciesAccepted: 'EUR',
+      priceRange: '€€',
+    })} />
+    <slot name="head" />
   </head>
   <body>
     <Nav />

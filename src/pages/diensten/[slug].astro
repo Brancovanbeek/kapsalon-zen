@@ -1,0 +1,155 @@
+---
+// @ts-nocheck
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllServices, portableTextToHtml, srcset } from '../../lib/sanity.js';
+
+export async function getStaticPaths() {
+  // Haal alle diensten één keer op uit Sanity
+  const services = await getAllServices().catch(() => []);
+
+  // Maak voor elke dienst een aparte pagina aan (bijv. /diensten/knippen)
+  return services.map(service => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+---
+
+<BaseLayout
+  title={service.title}
+  description={service.shortDescription ?? `${service.title} bij Kapsalon Zen`}
+  ogImage={service.imageUrl ?? undefined}
+>
+
+  <main class="dienst-page">
+    <div class="container back-link-wrap">
+      <a href="/diensten" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Alle diensten
+      </a>
+    </div>
+
+    <div class="container dienst-page__inner">
+      <div class="dienst-page__image-wrap fade-in">
+        {service.imageUrl
+          ? <img
+              src={`${service.imageUrl}?w=1200&auto=format`}
+              srcset={srcset(service.imageUrl)}
+              sizes="(min-width: 900px) 50vw, 100vw"
+              alt={service.imageAlt ?? service.title}
+              loading="eager"
+              width="600"
+              height="450"
+              class="dienst-page__image"
+            />
+          : <div class="dienst-page__image dienst-page__image--placeholder"></div>
+        }
+      </div>
+
+      <div class="dienst-page__content">
+        <span class="label fade-in">Dienst</span>
+        <h1 class="dienst-page__title fade-in fade-in-delay-1">{service.title}</h1>
+
+        {service.price && <p class="dienst-page__price fade-in fade-in-delay-1">{service.price}</p>}
+
+        <div class="divider fade-in fade-in-delay-2"></div>
+
+        {service.shortDescription && <p class="dienst-page__short-desc fade-in fade-in-delay-2">{service.shortDescription}</p>}
+
+        {service.description?.length > 0 && (
+          <div class="dienst-page__body prose fade-in fade-in-delay-3" set:html={portableTextToHtml(service.description)} />
+        )}
+
+        <a href="/contact" class="btn btn-primary fade-in fade-in-delay-3">
+          Afspraak maken
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .dienst-page {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .back-link-wrap {
+    margin-bottom: 3rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+    transition: color var(--transition);
+    margin-top: 2rem;
+  }
+
+  .back-link:hover {
+    color: var(--dark);
+  }
+
+  .dienst-page__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .dienst-page__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .dienst-page__image--placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--cream);
+  }
+
+  .dienst-page__content {
+    padding-top: 1rem;
+  }
+
+  .dienst-page__content .btn {
+    margin-top: 2.5rem;
+  }
+
+  .dienst-page__content .label {
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .dienst-page__title {
+    margin-bottom: 0.5rem;
+  }
+
+  .dienst-page__price {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-top: 0.25rem;
+  }
+
+  .dienst-page__short-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1.0625rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 901px) {
+    .dienst-page__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+</style>

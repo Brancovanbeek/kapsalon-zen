@@ -72,3 +72,84 @@ const { service } = Astro.props;
   </main>
 </BaseLayout>
 
+<style>
+  .dienst-page {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .back-link-wrap {
+    margin-bottom: 3rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+    transition: color var(--transition);
+    margin-top: 2rem;
+  }
+
+  .back-link:hover {
+    color: var(--dark);
+  }
+
+  .dienst-page__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .dienst-page__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .dienst-page__image--placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--cream);
+  }
+
+  .dienst-page__content {
+    padding-top: 1rem;
+  }
+
+  .dienst-page__content .btn {
+    margin-top: 2.5rem;
+  }
+
+  .dienst-page__content .label {
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .dienst-page__title {
+    margin-bottom: 0.5rem;
+  }
+
+  .dienst-page__price {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-top: 0.25rem;
+  }
+
+  .dienst-page__short-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1.0625rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 901px) {
+    .dienst-page__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import { getAllServices } from '../lib/sanity.js';
+
+const services = await getAllServices().catch(() => []);
+
+---
+
+<BaseLayout
+  title="Diensten"
+  description="Ontdek ons volledige aanbod aan kappersdiensten — knippen, kleuren, highlights, balayage en meer."
+>
+
+  <main>
+    <PageHeader
+      label="Wat wij doen"
+      title="Onze diensten"
+      sub="Van een frisse knipbeurt tot een volledige kleurbehandeling — bij Kapsalon Zen bent u in goede handen."
+    />
+
+    <!-- Services grid -->
+    <section class="section">
+      <div class="container">
+        {services.length > 0 ? (
+          <div class="grid-3">
+            {services.map((service, i) => (
+              <div class={`fade-in fade-in-delay-${(i % 3) + 1}`}>
+                <ServiceCard
+                  title={service.title}
+                  slug={service.slug}
+                  shortDescription={service.shortDescription}
+                  price={service.price}
+                  imageUrl={service.imageUrl}
+                  imageAlt={service.imageAlt}
+                  number={String(i + 1).padStart(2, '0')}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state">
+            <p>Nog geen diensten toegevoegd. Voeg diensten toe via Sanity Studio.</p>
+            <a href="/contact" class="btn btn-primary">Neem contact op</a>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="diensten-cta section">
+      <div class="container diensten-cta__inner">
+        <div>
+          <span class="label fade-in">Twijfelt u?</span>
+          <h2 class="fade-in fade-in-delay-1">Maak vrijblijvend een afspraak</h2>
+          <p class="diensten-cta__desc fade-in fade-in-delay-2">
+            Weet u niet zeker welke dienst bij u past? Wij adviseren u graag persoonlijk.
+          </p>
+        </div>
+        <a href="/contact" class="btn btn-primary fade-in">Afspraak maken</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+

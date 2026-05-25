@@ -39,7 +39,7 @@ const isActive = (href: string) =>
 
     <div class="nav__actions">
       <a href="/contact" class="btn btn-ghost nav__cta">Afspraak maken</a>
-      <label for="menu-open" class="nav__hamburger" aria-label="Menu openen" tabindex="0">
+      <label for="menu-open" class="nav__hamburger" aria-label="Menu openen" tabindex="0" role="button">
         <span class="nav__hamburger-bar"></span>
         <span class="nav__hamburger-bar"></span>
         <span class="nav__hamburger-bar"></span>
@@ -51,7 +51,7 @@ const isActive = (href: string) =>
 
 <!-- Mobiel menu -->
 <div class="mobile-menu">
-  <label for="menu-open" class="mobile-menu__close" aria-label="Menu sluiten" tabindex="0">
+  <label for="menu-open" class="mobile-menu__close" aria-label="Menu sluiten" tabindex="0" role="button">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
       <line x1="18" y1="6" x2="6" y2="18"></line>
       <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -291,3 +291,15 @@ const isActive = (href: string) =>
     }
   }
 </style>
+
+<script>
+  document.querySelectorAll('.nav__hamburger, .mobile-menu__close').forEach(el => {
+    el.addEventListener('keydown', (e) => {
+      const ke = e as KeyboardEvent;
+      if (ke.key === 'Enter' || ke.key === ' ') {
+        ke.preventDefault();
+        (el as HTMLElement).click();
+      }
+    });
+  });
+</script>

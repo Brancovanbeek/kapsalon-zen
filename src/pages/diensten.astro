@@ -23,6 +23,7 @@ const services = await getAllServices().catch(() => []);
     <!-- Services grid -->
     <section class="section">
       <div class="container">
+        <h2 class="sr-only">Alle diensten</h2>
         {services.length > 0 ? (
           <div class="grid-3">
             {services.map((service, i) => (

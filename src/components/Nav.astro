@@ -14,9 +14,12 @@ const isActive = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath === href || currentPath.startsWith(href + '/');
 ---
 
-<input type="checkbox" id="menu-open" class="menu-toggle" aria-hidden="true" />
+<a href="#main-content" class="skip-link">Naar inhoud springen</a>
 
-<nav class="nav">
+<input type="checkbox" id="menu-open" class="menu-toggle" tabindex="-1" aria-hidden="true" />
+
+<header class="site-header">
+<nav class="nav" aria-label="Hoofdnavigatie">
   <div class="nav__inner container">
     <a href="/" class="nav__logo" aria-label="Kapsalon Zen — terug naar home">ZEN</a>
 
@@ -44,6 +47,7 @@ const isActive = (href: string) =>
     </div>
   </div>
 </nav>
+</header>
 
 <!-- Mobiel menu -->
 <div class="mobile-menu">
@@ -74,16 +78,36 @@ const isActive = (href: string) =>
 <label for="menu-open" class="mobile-overlay" aria-hidden="true"></label>
 
 <style>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 9999;
+    padding: 0.75rem 1.25rem;
+    background: var(--dark);
+    color: var(--cream);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: top 0s;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
   .menu-toggle {
     display: none;
   }
 
-  .nav {
+  .site-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
+  }
+
+  .nav {
     padding: 1rem 0;
     background: rgba(221, 210, 192, 0.97);
     backdrop-filter: blur(12px);
@@ -119,7 +143,10 @@ const isActive = (href: string) =>
     letter-spacing: 0.04em;
     color: var(--dark);
     position: relative;
-    padding-bottom: 2px;
+    padding: 0.75rem 0 2px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
     transition: color var(--transition);
   }
 

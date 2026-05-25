@@ -216,12 +216,12 @@ const displayTestimonials = testimonials.slice(0, 3);
         <blockquote class="testimonial-featured fade-in">
           <span class="testimonial-featured__mark" aria-hidden="true">"</span>
           <p class="testimonial-featured__quote">{displayTestimonials[0]?.quote}</p>
-          <footer class="testimonial-featured__footer">
+          <p class="testimonial-featured__footer">
             <span class="testimonial-featured__stars" aria-label={`${displayTestimonials[0]?.rating ?? 5} van 5 sterren`}>
               {'★'.repeat(displayTestimonials[0]?.rating ?? 5)}{'☆'.repeat(5 - (displayTestimonials[0]?.rating ?? 5))}
             </span>
             <span class="testimonial-featured__name">— {displayTestimonials[0]?.name}</span>
-          </footer>
+          </p>
         </blockquote>
       </div>
     </div>
@@ -236,7 +236,7 @@ const displayTestimonials = testimonials.slice(0, 3);
                 {'★'.repeat(t.rating ?? 5)}{'☆'.repeat(5 - (t.rating ?? 5))}
               </p>
               <p class="testimonial-card__quote">"{t.quote}"</p>
-              <footer class="testimonial-card__name">— {t.name}</footer>
+              <p class="testimonial-card__name">— {t.name}</p>
             </blockquote>
           ))}
         </div>

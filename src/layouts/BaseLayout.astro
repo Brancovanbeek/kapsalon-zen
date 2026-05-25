@@ -49,6 +49,7 @@ const siteUrl = Astro.site?.origin ?? 'https://kapsalonzenvolendam.nl';
   </head>
   <body>
     <Nav />
+    <div id="main-content" tabindex="-1" style="outline: none;"></div>
     <slot />
     <Footer />
   </body>

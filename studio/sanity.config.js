@@ -12,8 +12,8 @@ export default defineConfig({
   name: 'kapsalon-zen',
   title: 'Kapsalon Zen',
 
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? 'ab9y12jb',
-  dataset: process.env.SANITY_STUDIO_DATASET ?? 'production',
+  projectId: process.env.SANITY_STUDIO_PROJECT_ID,
+  dataset: process.env.SANITY_STUDIO_DATASET,
 
   plugins: [
     structureTool({
